@@ -1,0 +1,40 @@
+#include <vector>
+#include <unordered_map>
+
+class Solution {
+public:
+    std::string bestHand(std::vector<int>& ranks, std::vector<char>& suits) {
+        std::unordered_map<int, int> rankCount;
+        std::unordered_map<char, int> suitCount;
+
+        // Count the occurrences of each rank and suit
+        for (int i = 0; i < 5; ++i) {
+            rankCount[ranks[i]]++;
+            suitCount[suits[i]]++;
+        }
+
+        // Check for a Flush
+        for (const auto& entry : suitCount) {
+            if (entry.second == 5) {
+                return "Flush";
+            }
+        }
+
+        // Check for Three of a Kind
+        for (const auto& entry : rankCount) {
+            if (entry.second >= 3) {
+                return "Three of a Kind";
+            }
+        }
+
+        // Check for a Pair
+        for (const auto& entry : rankCount) {
+            if (entry.second >= 2) {
+                return "Pair";
+            }
+        }
+
+        // Default to High Card if no other conditions met
+        return "High Card";
+    }
+};
